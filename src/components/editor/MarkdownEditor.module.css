@@ -1,0 +1,68 @@
+.editor {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background: var(--background-primary);
+}
+
+.editor :global(.cm-editor) {
+  height: 100%;
+  background: var(--background-primary);
+}
+
+.editor :global(.cm-scroller) {
+  overflow: auto;
+}
+
+/* ============================================================
+   Live Preview extension styles
+   ============================================================ */
+
+/* Wikilinks */
+.editor :global(.cm-wikilink) {
+  color: var(--text-accent);
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  transition: border-color 100ms;
+}
+.editor :global(.cm-wikilink:hover) {
+  border-bottom-color: var(--text-accent);
+}
+
+/* Highlights ==text== */
+.editor :global(.cm-highlight) {
+  background: var(--text-highlight-bg);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+/* Callout container - applied to blockquote lines following a callout title */
+.editor :global(.cm-callout-body) {
+  border-left: 3px solid var(--interactive-accent);
+  padding-left: 12px;
+  margin: 4px 0;
+}
+
+/* Task checkboxes */
+.editor :global(.cm-task-checkbox) {
+  cursor: pointer;
+  accent-color: var(--interactive-accent);
+}
+
+/* ============================================================
+   Inline title (note filename shown above content)
+   ============================================================ */
+.inlineTitle {
+  max-width: var(--file-line-width);
+  margin: 0 auto;
+  padding: var(--file-margins) var(--file-margins) 0;
+  font-size: var(--inline-title-size);
+  font-weight: var(--inline-title-weight);
+  color: var(--inline-title-color);
+  font-family: var(--inline-title-font);
+  outline: none;
+  border: none;
+  background: transparent;
+  width: 100%;
+  line-height: 1.2;
+}

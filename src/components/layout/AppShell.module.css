@@ -1,0 +1,43 @@
+.shell {
+  display: grid;
+  grid-template-columns: var(--ribbon-width) 1fr;
+  grid-template-rows: 1fr var(--status-bar-height);
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--background-primary);
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  height: 100%;
+}
+
+.editorColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  position: relative;
+}
+
+.editorArea {
+  flex: 1;
+  overflow: auto;
+  background: var(--background-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+.emptyState {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-faint);
+  font-size: var(--font-ui-medium);
+}

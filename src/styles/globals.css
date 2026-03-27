@@ -1,0 +1,144 @@
+/* === Reset === */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-interface);
+  font-size: var(--font-ui-medium);
+  color: var(--text-normal);
+  background: var(--background-primary);
+  line-height: var(--line-height-normal);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* === Font Stacks === */
+:root {
+  --font-interface: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --font-text: Georgia, "Times New Roman", serif;
+  --font-monospace: "Source Code Pro", "SFMono-Regular", Consolas, "Roboto Mono", Menlo, Monaco, "Courier New", monospace;
+
+  /* === Font Sizes === */
+  --font-smallest: 10px;
+  --font-smaller: 11px;
+  --font-small: 12px;
+  --font-ui-small: 13px;
+  --font-ui-medium: 15px;
+  --font-ui-large: 20px;
+  --font-text-size: 16px;
+
+  /* === Line Heights === */
+  --line-height-normal: 1.5;
+  --line-height-tight: 1.3;
+  --line-height-loose: 2;
+  --editor-line-height: 1.8888;
+
+  /* === Spacing (4px base grid) === */
+  --size-2-1: 2px;
+  --size-2-2: 4px;
+  --size-2-3: 8px;
+  --size-4-1: 4px;
+  --size-4-2: 8px;
+  --size-4-3: 12px;
+  --size-4-4: 16px;
+  --size-4-5: 20px;
+  --size-4-6: 24px;
+
+  /* === Border Radius === */
+  --radius-s: 4px;
+  --radius-m: 6px;
+  --radius-l: 8px;
+  --radius-xl: 12px;
+
+  /* === Shadows === */
+  --shadow-s: 0px 1px 2px rgba(0,0,0,.12), 0px 0px 1px rgba(0,0,0,.08);
+  --shadow-l: 0px 8px 16px rgba(0,0,0,.24), 0px 2px 4px rgba(0,0,0,.12);
+
+  /* === Editor === */
+  --file-margins: 40px;
+  --file-line-width: 700px;
+  --editor-font-size: 16px;
+
+  /* === Inline Formatting === */
+  --bold-weight: 600;
+  --italic-color: inherit;
+  --code-background: rgba(135,131,120,.15);
+  --code-color: #eb5757;
+  --code-size: 0.875em;
+
+  /* === Blockquote === */
+  --blockquote-border-thickness: 3px;
+  --blockquote-border-color: var(--interactive-accent);
+  --blockquote-color: var(--text-muted);
+  --blockquote-font-style: italic;
+
+  /* === HR === */
+  --hr-color: var(--background-modifier-border);
+  --hr-thickness: 1px;
+
+  /* === Tables === */
+  --table-border-color: var(--background-modifier-border);
+  --table-header-background: var(--background-secondary);
+  --table-add-button-background: var(--background-secondary);
+  --table-row-alt-background: var(--background-primary-alt, var(--background-primary));
+
+  /* === Checkboxes === */
+  --checkbox-radius: var(--radius-s);
+  --checkbox-color: var(--interactive-accent);
+  --checkbox-color-hover: var(--interactive-accent-hover);
+  --checkbox-border-color: var(--text-faint);
+  --checkbox-size: 15px;
+
+  /* === Scrollbars === */
+  --scrollbar-bg: transparent;
+  --scrollbar-thumb-bg: rgba(255,255,255,.1);
+  --scrollbar-active-thumb-bg: rgba(255,255,255,.2);
+
+  /* === Indentation === */
+  --indentation-guide-color: var(--background-modifier-border);
+  --indentation-guide-width: 1px;
+
+  /* === Inline Title === */
+  --inline-title-color: var(--h1-color, var(--text-normal));
+  --inline-title-font: var(--font-text);
+  --inline-title-size: 2em;
+  --inline-title-weight: 700;
+
+  /* === Component dimensions === */
+  --ribbon-width: 44px;
+  --sidebar-width: 280px;
+  --tab-bar-height: 40px;
+  --status-bar-height: 24px;
+  --scrollbar-width: 6px;
+  --divider-handle-width: 4px;
+}
+
+/* === Custom Scrollbars === */
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-bg);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-active-thumb-bg);
+}
+
+/* === Selection === */
+::selection {
+  background: var(--text-selection, rgba(124,58,237,.25));
+}

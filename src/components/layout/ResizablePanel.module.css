@@ -1,0 +1,48 @@
+.panel {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.left {
+  flex-direction: row;
+  border-right: 1px solid var(--background-modifier-border);
+}
+
+.right {
+  flex-direction: row-reverse;
+  border-left: 1px solid var(--background-modifier-border);
+}
+
+.content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  cursor: col-resize;
+  z-index: 20;
+  transition: background 150ms ease;
+}
+
+.divider:hover,
+.divider:active {
+  background: var(--interactive-accent);
+  width: 4px;
+}
+
+.divider-left {
+  right: 0;
+}
+
+.divider-right {
+  left: 0;
+}

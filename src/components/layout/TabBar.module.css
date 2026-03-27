@@ -1,0 +1,117 @@
+.tabBar {
+  height: var(--tab-bar-height);
+  display: flex;
+  align-items: stretch;
+  background: var(--background-secondary);
+  border-bottom: 1px solid var(--background-modifier-border);
+  overflow: hidden;
+}
+
+.tabs {
+  display: flex;
+  align-items: stretch;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: 1;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  min-width: 80px;
+  max-width: 200px;
+  height: 100%;
+  cursor: pointer;
+  border-right: 1px solid var(--background-modifier-border);
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  position: relative;
+  user-select: none;
+  flex-shrink: 0;
+  transition: background 100ms ease;
+}
+
+.tab:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.tab.active {
+  background: var(--background-primary);
+  color: var(--text-normal);
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--interactive-accent);
+}
+
+.title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dirty {
+  color: var(--interactive-accent);
+  font-size: 8px;
+}
+
+.close {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-s);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.tab:hover .close,
+.tab.active .close {
+  display: flex;
+}
+
+.close:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.newTab {
+  width: 40px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 100ms ease, color 100ms ease;
+}
+
+.newTab:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}

@@ -1,0 +1,21 @@
+.pane {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--background-primary);
+}
+
+.inlineTitle {
+  max-width: var(--file-line-width);
+  margin: 0 auto;
+  width: 100%;
+  padding: var(--file-margins) var(--file-margins) 0;
+  font-size: var(--inline-title-size);
+  font-weight: var(--inline-title-weight);
+  color: var(--inline-title-color);
+  font-family: var(--inline-title-font);
+  line-height: 1.2;
+  flex-shrink: 0;
+  pointer-events: none;
+}

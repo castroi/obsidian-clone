@@ -1,0 +1,52 @@
+.ribbon {
+  width: var(--ribbon-width);
+  height: 100%;
+  background: var(--background-secondary);
+  border-right: 1px solid var(--background-modifier-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding-bottom: 4px;
+}
+
+.iconBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-m);
+  background: transparent;
+  border: none;
+  color: var(--icon-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 100ms ease, color 100ms ease;
+}
+
+.iconBtn:hover {
+  background: var(--background-modifier-hover);
+  color: var(--icon-color-hover);
+}
+
+.iconBtn.active {
+  background: var(--background-modifier-active-hover);
+  color: var(--icon-color-active);
+}

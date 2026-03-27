@@ -1,0 +1,157 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  font-size: var(--font-ui-small);
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+  transition: background 80ms;
+}
+
+.header:hover {
+  background: var(--background-modifier-hover);
+}
+
+.chevron {
+  transition: transform 150ms ease;
+  flex-shrink: 0;
+}
+
+.chevron.collapsed {
+  transform: rotate(-90deg);
+}
+
+.headerTitle {
+  flex: 1;
+}
+
+.count {
+  background: var(--background-modifier-hover);
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.fields {
+  padding: 4px 0;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  min-height: 32px;
+}
+
+.key {
+  font-size: 12px;
+  color: var(--text-muted);
+  width: 80px;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.valueWrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.valueInput {
+  flex: 1;
+  min-width: 0;
+  height: 24px;
+  padding: 0 6px;
+  background: var(--background-modifier-form-field, var(--background-secondary));
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  color: var(--text-normal);
+  font-size: 12px;
+  outline: none;
+  transition: border-color 100ms;
+}
+
+.valueInput:focus {
+  border-color: var(--interactive-accent);
+}
+
+.checkbox {
+  accent-color: var(--interactive-accent);
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+.deleteBtn {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-s);
+  color: var(--text-faint);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 80ms, background 80ms, color 80ms;
+  flex-shrink: 0;
+}
+
+.field:hover .deleteBtn {
+  opacity: 1;
+}
+
+.deleteBtn:hover {
+  background: var(--background-modifier-error);
+  color: var(--color-red);
+}
+
+.addBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 6px 12px;
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--background-modifier-border);
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  cursor: pointer;
+  transition: background 80ms, color 80ms;
+  text-align: left;
+}
+
+.addBtn:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.noFields {
+  padding: 8px 12px;
+  font-size: var(--font-ui-small);
+  color: var(--text-faint);
+}
+
+.empty {
+  padding: 16px;
+  font-size: var(--font-ui-small);
+  color: var(--text-faint);
+  text-align: center;
+}
