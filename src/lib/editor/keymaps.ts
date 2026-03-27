@@ -35,5 +35,12 @@ export function obsidianKeymap(
       key: 'Mod-s',
       run: () => true  // Auto-save already handles this; just consume
     },
+    {
+      key: 'Mod-Shift-d',
+      run: () => {
+        window.dispatchEvent(new CustomEvent('toggle-table-controls'))
+        return true
+      }
+    },
   ]
 }
