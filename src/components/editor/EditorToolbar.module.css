@@ -35,6 +35,14 @@
   color: var(--text-normal);
 }
 
+.separator {
+  width: 1px;
+  height: 16px;
+  background: var(--background-modifier-border);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
 .modes {
   display: flex;
   align-items: center;

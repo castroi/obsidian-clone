@@ -15,6 +15,7 @@ import { highlightsExtension } from './extensions/highlights'
 import { tasksExtension } from './extensions/tasks'
 import { calloutsExtension } from './extensions/callouts'
 import { headingsExtension } from './extensions/headings'
+import { tablesExtension } from './extensions/tables'
 import styles from './MarkdownEditor.module.css'
 
 // Module-level registry so toolbar can access current view
@@ -85,6 +86,13 @@ function createObsidianTheme() {
       color: 'var(--blockquote-color)',
       fontStyle: 'var(--blockquote-font-style)',
     },
+    // Table syntax styling — make pipe/separator characters subtle
+    '.cm-table-separator': {
+      color: 'var(--text-faint)',
+    },
+    '.cm-tableDelimiter': {
+      color: 'var(--text-faint)',
+    },
   }, { dark: true })
 }
 
@@ -138,6 +146,7 @@ export function MarkdownEditor({ path }: Props) {
         tasksExtension(),
         calloutsExtension(),
         headingsExtension(),
+        tablesExtension(),
         EditorView.domEventHandlers({
           click(event) {
             const target = event.target as HTMLElement

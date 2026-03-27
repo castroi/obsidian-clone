@@ -1,5 +1,11 @@
 import { EditorView } from '@codemirror/view'
 import { EditorSelection } from '@codemirror/state'
+import {
+  getTableRange, parseTable, createTable, insertRow, deleteRow,
+  insertColumn, deleteColumn, moveRow, moveColumn,
+  setColumnAlignment, sortByColumn, transposeTable, getCellAtOffset,
+  type ParsedTable, type CellLocation,
+} from './table-utils'
 
 function wrapSelection(view: EditorView, before: string, after: string) {
   const { state } = view
@@ -55,6 +61,27 @@ function prependToLine(view: EditorView, prefix: string) {
   view.focus()
 }
 
+function applyTableTransform(
+  view: EditorView,
+  transform: (table: ParsedTable, cell: CellLocation) => string
+) {
+  const doc = view.state.doc.toString()
+  const offset = view.state.selection.main.head
+  const range = getTableRange(doc, offset)
+  if (!range) return
+
+  const tableText = doc.slice(range.startOffset, range.endOffset)
+  const table = parseTable(tableText, range)
+  const cell = getCellAtOffset(doc, offset)
+  if (!cell) return
+
+  const newTable = transform(table, cell)
+  view.dispatch({
+    changes: { from: range.startOffset, to: range.endOffset, insert: newTable }
+  })
+  view.focus()
+}
+
 export function applyFormatting(view: EditorView, action: string) {
   switch (action) {
     case 'bold':          return wrapSelection(view, '**', '**')
@@ -88,5 +115,58 @@ export function applyFormatting(view: EditorView, action: string) {
       view.focus()
       break
     }
+    case 'table-insert': {
+      const { from } = view.state.selection.main
+      const line = view.state.doc.lineAt(from)
+      const table = createTable(3, 3)
+      view.dispatch({
+        changes: { from: line.to, insert: '\n\n' + table + '\n' },
+        selection: EditorSelection.cursor(line.to + 2 + '| '.length)
+      })
+      view.focus()
+      break
+    }
+    case 'table-insert-row':
+      applyTableTransform(view, (table, cell) => insertRow(table, cell.row))
+      break
+    case 'table-delete-row':
+      applyTableTransform(view, (table, cell) => deleteRow(table, cell.row))
+      break
+    case 'table-insert-col':
+      applyTableTransform(view, (table, cell) => insertColumn(table, cell.col))
+      break
+    case 'table-delete-col':
+      applyTableTransform(view, (table, cell) => deleteColumn(table, cell.col))
+      break
+    case 'table-move-row-up':
+      applyTableTransform(view, (table, cell) => moveRow(table, cell.row, 'up'))
+      break
+    case 'table-move-row-down':
+      applyTableTransform(view, (table, cell) => moveRow(table, cell.row, 'down'))
+      break
+    case 'table-move-col-left':
+      applyTableTransform(view, (table, cell) => moveColumn(table, cell.col, 'left'))
+      break
+    case 'table-move-col-right':
+      applyTableTransform(view, (table, cell) => moveColumn(table, cell.col, 'right'))
+      break
+    case 'table-align-left':
+      applyTableTransform(view, (table, cell) => setColumnAlignment(table, cell.col, 'left'))
+      break
+    case 'table-align-center':
+      applyTableTransform(view, (table, cell) => setColumnAlignment(table, cell.col, 'center'))
+      break
+    case 'table-align-right':
+      applyTableTransform(view, (table, cell) => setColumnAlignment(table, cell.col, 'right'))
+      break
+    case 'table-sort-asc':
+      applyTableTransform(view, (table, cell) => sortByColumn(table, cell.col, 'asc'))
+      break
+    case 'table-sort-desc':
+      applyTableTransform(view, (table, cell) => sortByColumn(table, cell.col, 'desc'))
+      break
+    case 'table-transpose':
+      applyTableTransform(view, (table) => transposeTable(table))
+      break
   }
 }

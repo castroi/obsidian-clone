@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 type LeftPanel = 'files' | 'search' | 'bookmarks' | 'tags'
-type RightPanel = 'backlinks' | 'outline' | 'properties'
+type RightPanel = 'backlinks' | 'outline' | 'properties' | 'table-controls'
 type Theme = 'dark' | 'light'
 
 interface UIState {

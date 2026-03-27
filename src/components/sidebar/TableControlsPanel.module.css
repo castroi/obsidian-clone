@@ -1,0 +1,53 @@
+.panel {
+  padding: 8px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  font-size: var(--font-ui-small);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.group {
+  margin-bottom: 12px;
+}
+
+.groupTitle {
+  font-size: var(--font-smallest);
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 8px;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 0 4px;
+}
+
+.controlBtn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-s);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 80ms ease, color 80ms ease;
+}
+
+.controlBtn:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}

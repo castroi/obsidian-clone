@@ -4,6 +4,13 @@ import {
   List, ListOrdered, CheckSquare, Quote, Minus, Eye, Edit3
 } from 'lucide-react'
 import { useEditorStore, EditorMode } from '@/stores/editor'
+import {
+  TableIcon, InsertRowIcon, InsertColumnIcon,
+  DeleteRowIcon, DeleteColumnIcon, AlignLeftIcon,
+  AlignCenterIcon, AlignRightIcon, SortAscIcon,
+  SortDescIcon, TransposeIcon, MoveRowUpIcon,
+  MoveRowDownIcon, MoveColumnLeftIcon, MoveColumnRightIcon
+} from './icons/table-icons'
 import styles from './EditorToolbar.module.css'
 
 interface ToolbarAction {
@@ -33,6 +40,24 @@ export function EditorToolbar({ onAction }: Props) {
     { icon: <Minus size={15} strokeWidth={2} />, label: 'Horizontal rule', action: 'hr' },
   ]
 
+  const tableTools: ToolbarAction[] = [
+    { icon: <TableIcon size={15} />, label: 'Insert table', action: 'table-insert' },
+    { icon: <InsertRowIcon size={15} />, label: 'Insert row below', action: 'table-insert-row' },
+    { icon: <DeleteRowIcon size={15} />, label: 'Delete row', action: 'table-delete-row' },
+    { icon: <InsertColumnIcon size={15} />, label: 'Insert column right', action: 'table-insert-col' },
+    { icon: <DeleteColumnIcon size={15} />, label: 'Delete column', action: 'table-delete-col' },
+    { icon: <MoveRowUpIcon size={15} />, label: 'Move row up', action: 'table-move-row-up' },
+    { icon: <MoveRowDownIcon size={15} />, label: 'Move row down', action: 'table-move-row-down' },
+    { icon: <MoveColumnLeftIcon size={15} />, label: 'Move column left', action: 'table-move-col-left' },
+    { icon: <MoveColumnRightIcon size={15} />, label: 'Move column right', action: 'table-move-col-right' },
+    { icon: <AlignLeftIcon size={15} />, label: 'Align left', action: 'table-align-left' },
+    { icon: <AlignCenterIcon size={15} />, label: 'Align center', action: 'table-align-center' },
+    { icon: <AlignRightIcon size={15} />, label: 'Align right', action: 'table-align-right' },
+    { icon: <SortAscIcon size={15} />, label: 'Sort ascending', action: 'table-sort-asc' },
+    { icon: <SortDescIcon size={15} />, label: 'Sort descending', action: 'table-sort-desc' },
+    { icon: <TransposeIcon size={15} />, label: 'Transpose table', action: 'table-transpose' },
+  ]
+
   const modes: { id: EditorMode; label: string; icon: React.ReactNode }[] = [
     { id: 'source', label: 'Source', icon: <Edit3 size={13} strokeWidth={2} /> },
     { id: 'preview', label: 'Live Preview', icon: <Edit3 size={13} strokeWidth={2} /> },
@@ -50,6 +75,21 @@ export function EditorToolbar({ onAction }: Props) {
             aria-label={tool.label}
             onMouseDown={(e) => {
               e.preventDefault() // Don't blur editor
+              onAction(tool.action)
+            }}
+          >
+            {tool.icon}
+          </button>
+        ))}
+        <div className={styles.separator} />
+        {tableTools.map((tool) => (
+          <button
+            key={tool.action}
+            className={styles.toolBtn}
+            title={tool.label}
+            aria-label={tool.label}
+            onMouseDown={(e) => {
+              e.preventDefault()
               onAction(tool.action)
             }}
           >
