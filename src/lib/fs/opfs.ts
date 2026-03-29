@@ -1,10 +1,68 @@
 import type { FileSystemAdapter, VaultEntry, VaultFile, VaultFolder } from './fileSystem'
+import { isIOS } from '@/lib/utils/platform'
 
 /**
  * Origin Private File System adapter for iOS Safari PWA and Firefox
  */
 export class OPFSFileSystem implements FileSystemAdapter {
   private rootHandle: FileSystemDirectoryHandle | null = null
+
+  // Worker-based write path (used on iOS where createWritable() is unreliable)
+  private worker: Worker | null = null
+  private pendingOps: Map<number, { resolve: (v?: any) => void; reject: (e: Error) => void }> =
+    new Map()
+  private opCounter: number = 0
+  private useWorker: boolean
+
+  constructor() {
+    this.useWorker = isIOS()
+  }
+
+  /**
+   * Lazily creates the OPFS worker and wires up message/error handlers.
+   */
+  private getWorker(): Worker {
+    if (this.worker) return this.worker
+
+    const w = new Worker('/opfs-worker.js')
+
+    w.onmessage = (event) => {
+      const { id, ok, error } = event.data
+      const pending = this.pendingOps.get(id)
+      if (!pending) return
+      this.pendingOps.delete(id)
+      if (ok) {
+        pending.resolve()
+      } else {
+        pending.reject(new Error(error ?? 'OPFS worker operation failed'))
+      }
+    }
+
+    w.onerror = (event) => {
+      // Reject all pending operations if the worker itself crashes
+      const err = new Error(event.message ?? 'OPFS worker error')
+      for (const pending of Array.from(this.pendingOps.values())) {
+        pending.reject(err)
+      }
+      this.pendingOps.clear()
+      this.worker = null
+    }
+
+    this.worker = w
+    return w
+  }
+
+  /**
+   * Send an operation to the worker and return a promise that resolves/rejects
+   * when the worker replies with the matching id.
+   */
+  private workerOp(op: string, data: Record<string, unknown>): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const id = ++this.opCounter
+      this.pendingOps.set(id, { resolve, reject })
+      this.getWorker().postMessage({ id, op, ...data })
+    })
+  }
 
   async openVault(): Promise<VaultFolder> {
     this.rootHandle = await navigator.storage.getDirectory()
@@ -66,6 +124,14 @@ export class OPFSFileSystem implements FileSystemAdapter {
 
   async writeFile(path: string, content: string): Promise<void> {
     if (!this.rootHandle) throw new Error('No vault open')
+
+    if (this.useWorker) {
+      // iOS path: route through the worker which uses createSyncAccessHandle()
+      await this.workerOp('write', { path, content })
+      return
+    }
+
+    // Non-iOS path: use createWritable() on the main thread (unchanged)
     const parts = path.split('/')
     const dir = await this.resolveDir(parts.slice(0, -1).join('/'), true)
     const fileHandle = await dir.getFileHandle(parts[parts.length - 1], { create: true })
@@ -76,6 +142,14 @@ export class OPFSFileSystem implements FileSystemAdapter {
 
   async deleteFile(path: string): Promise<void> {
     if (!this.rootHandle) throw new Error('No vault open')
+
+    if (this.useWorker) {
+      // iOS path: route through the worker
+      await this.workerOp('delete', { path })
+      return
+    }
+
+    // Non-iOS path: remove directly (unchanged)
     const parts = path.split('/')
     const dir = await this.resolveDir(parts.slice(0, -1).join('/'))
     await dir.removeEntry(parts[parts.length - 1])
